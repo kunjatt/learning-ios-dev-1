@@ -13,12 +13,10 @@ struct ContentView: View {
     
     // MARK: BODY
     var body: some View {
-        VStack {
+        NavigationStack {
             TabView(selection: $selectedTab) {
                 CoffeeMainView()
                     .listStyle(.plain)
-//                Text("browse".uppercased())
-//                    .font(.system(.title, design: .rounded))
                     .tabItem {
                         Image(systemName: "square.grid.2x2")
                         Text("Browse")
@@ -61,7 +59,7 @@ struct ContentView: View {
                     .tag(Tabs.profile)
             } // MARK: TABVIEW
             .tint(.yellow)
-        }
+        } // MARK: NAVIGATION STACK
         
     }
 }
