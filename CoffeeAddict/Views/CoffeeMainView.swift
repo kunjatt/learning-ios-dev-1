@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import ActivityView
 
 struct CoffeeMainView: View {
     //MARK: Properties
@@ -40,46 +41,21 @@ struct CoffeeMainView: View {
     var body: some View {
         VStack{
             NavigationStack {
-//                HStack{
                     List(coffeeSearchResults) { result in
                         NavigationLink(destination:{
                             DetailsCoffeeView(CoffeeDetails: result)
-                            
                         }){
-                            HStack{
-                                Image("\(result.image)")
-                                    .resizable()
-                                    .scaledToFit()
-                                    .cornerRadius(20)
-                                    .frame(width: 120)
-                                
-                                VStack(alignment: .leading){
-                                    
-                                    Text("\(result.name)")
-                                        .font(.system(size: 24))
-                                        .bold()
-                                        .padding(.bottom, 4)
-                                    Text("\(result.location)")
-                                        .font(.system(size: 18))
-                                        .fontWeight(.regular)
-                                        .foregroundColor(.black.opacity(0.4))
-                                        .padding(.bottom, 2)
-                                    Text("Rating 4.5/5")
-                                        .font(.system(size: 14))
-                                        .foregroundColor(.gray)
-                                    
-                                }
-    
-                            }
-                            
+                            CoffeeRow(coffee: result)
                         }
+                        .listRowSeparator(.hidden)
                         
                     }
-                
+                    
+                    .listStyle(.plain)
                     .navigationTitle("List Coffee Shop")
                     .searchable(
                         text: $searchText,
-                        prompt: "cari kopi?"
+                        prompt: "Cari Coffee Shop apa?"
                     ){
                         ForEach(coffeeSearchSuggestion) { suggestion in
                             Text("Looking for \(suggestion.name)")
@@ -87,11 +63,9 @@ struct CoffeeMainView: View {
                         }
                     }
                     
-//                }
-                
             } //MARK: Navigation
             
-        }
+        } // MARK: VStack
         
     }
 }
@@ -100,5 +74,76 @@ struct CoffeeMainView: View {
 struct CoffeeMainView_Previews: PreviewProvider {
     static var previews: some View {
         CoffeeMainView()
+    }
+}
+
+struct CoffeeRow: View {
+    @State var coffee: CoffeeShop
+    @State var item: ActivityItem?
+    
+    var body: some View {
+        HStack{
+            Image("\(coffee.image)")
+                .resizable()
+                .scaledToFit()
+                .cornerRadius(20)
+                .frame(width: 120)
+            
+            VStack(alignment: .leading){
+                
+                Text("\(coffee.name)")
+                    .font(.system(size: 24))
+                    .bold()
+                    .padding(.bottom, 4)
+                Text("\(coffee.location)")
+                    .font(.system(size: 18))
+                    .fontWeight(.regular)
+                    .foregroundColor(.black.opacity(0.4))
+                    .padding(.bottom, 2)
+                Text("Rating 4.5/5")
+                    .font(.system(size: 14))
+                    .foregroundColor(.gray)
+                if coffee.isFavorite {
+                    Image(systemName: "heart.fill")
+                        .foregroundColor(.pink)
+                        .padding(.vertical)
+                }
+                
+            }
+            
+        } // MARK: HStack
+        .swipeActions(edge: .leading, allowsFullSwipe: false) {
+            Button {
+                
+            } label: {
+                Image(systemName: "pin")
+            }
+            .tint(.yellow)
+            
+            Button {
+                
+            } label: {
+                Image(systemName: "square.and.arrow.up")
+            }
+            .tint(.indigo)
+        }
+        .contextMenu {
+            Button {
+                item = ActivityItem(items: "Coffeeshop with name: \(coffee.name) will be shared!!!")
+            } label: {
+                HStack {
+                    Text("Share coffeeshop")
+                    Image(systemName: "square.and.arrow.up")
+                }
+            }
+            
+            Button {
+                coffee.isFavorite.toggle()
+            } label: {
+                Text(coffee.isFavorite ? "Remove from favorite" : "Mark as favorite")
+                Image(systemName: "heart")
+            }
+        }
+        
     }
 }

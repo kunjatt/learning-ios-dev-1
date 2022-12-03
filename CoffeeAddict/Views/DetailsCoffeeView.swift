@@ -62,6 +62,6 @@ struct DetailsCoffeeView: View {
 //MARK: Preview
 struct DetailsCoffeeView_Previews: PreviewProvider {
     static var previews: some View {
-        DetailsCoffeeView(CoffeeDetails: CoffeeShop(image: "bojaeatery", name: "Boja Eatery", location: "Jl. Sumatera No. 21, Kota Bandung", review: "The food is delicious, cooked just right.  Friendly service.  Cozy atmosphere with floral decorations.  There is a ~robot~ that sends the dish.  Prices are reasonable for a restaurant of its class"))
+        DetailsCoffeeView(CoffeeDetails: CoffeeShop(image: "bojaeatery", name: "Boja Eatery", location: "Jl. Sumatera No. 21, Kota Bandung", review: "The food is delicious, cooked just right.  Friendly service.  Cozy atmosphere with floral decorations.  There is a ~robot~ that sends the dish.  Prices are reasonable for a restaurant of its class", isFavorite: false))
     }
 }

@@ -50,7 +50,7 @@ struct ContentView: View {
                         Text("Loans")
                     }
                     .tag(Tabs.loans)
-                Text("profile".uppercased())
+                SettingView()
                     .font(.system(.title, design: .rounded))
                     .tabItem {
                         Image(systemName: "person")
@@ -58,7 +58,7 @@ struct ContentView: View {
                     }
                     .tag(Tabs.profile)
             } // MARK: TABVIEW
-            .tint(.yellow)
+            .tint(.blue)
         } // MARK: NAVIGATION STACK
         
     }
